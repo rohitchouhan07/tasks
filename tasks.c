@@ -3,13 +3,16 @@
 #include <stdlib.h>
 #define BUFFER_SIZE 1000
 
+/* Function Declaration */
+
 WINDOW *create_newwin(int height, int width, int starty, int startx);
+
 int system (const char * command);
 
 int main(int argc, char *argv[])
 {
     WINDOW *task_win;
-    int row,col;
+    int row, col;
     int ch;
     char title[] = "Tasks to accomplish asap!";
     int startx, starty, height, width;
@@ -37,37 +40,36 @@ int main(int argc, char *argv[])
     fptr = fopen("tasks.txt", "r");
     while(fgets(buffer, BUFFER_SIZE, fptr) != NULL) 
         {
-                    /* Total character read count */
-                    totalRead = strlen(buffer);
+              /* Total character read count */
+              totalRead = strlen(buffer);
 
 
-                            /*
-                             *          * Trim new line character from last if
-                             *          exists.
-                             *                   */
-                            buffer[totalRead - 1] = buffer[totalRead - 1] == '\n' 
-                                                                    ? '\0' 
-                                                                                                        : buffer[totalRead - 1];
+              /*
+               *          * Trim new line character from last if
+               *          exists.
+               *                  */
+              buffer[totalRead - 1] = buffer[totalRead - 1] == '\n' ? '\0' : buffer[totalRead - 1];
 
-
-                                    /* Print line read on cosole*/
-                                    waddstr(task_win, buffer);
-                                    wprintw(task_win, "\n");
-    wrefresh(task_win);
-                                        } 
+               /* Print line read on cosole*/
+               waddstr(task_win, buffer);
+               wprintw(task_win, "\n");
+               wrefresh(task_win); 
+        } 
     while(1)
     {
         ch = getch();
         if(ch == 113){
         endwin();
         return 0;
-    } 
-    if(ch == 101)
-    {
+        } 
+        
+        if(ch == 101)
+        {
         system("$EDITOR tasks.txt");
-    }
+        }
     }       
 }
+
 WINDOW *create_newwin(int height, int width, int starty, int startx)
     {
      WINDOW *local_win;
